@@ -2,7 +2,7 @@
 
 #include "ui_mainwindow.h"
 
-#include <QtDBus>
+#include <QThread>
 #include <iostream>
 #include <lo/lo.h>
 
@@ -29,7 +29,8 @@ MainWindow::~MainWindow()
 void MainWindow::SendData(float value)
 {
     const auto addr = lo_address_new(address.c_str(), port.c_str());
-    const auto send_message_core = [&](float val) {
+    const auto SendMessageImpl = [&](float val)
+    {
         const auto msg = lo_message_new();
         lo_message_add_float(msg, val);
         lo_send_message(addr, path.c_str(), msg);
@@ -40,13 +41,13 @@ void MainWindow::SendData(float value)
     auto val = currentValue;
     while (std::abs(val - value) >= 0.06)
     {
-        send_message_core(val);
+        SendMessageImpl(val);
         QThread::msleep(10);
         val += ((val >= value ? -1 : +1) * 0.05);
     }
 #endif
     currentValue = value;
-    send_message_core(value);
+    SendMessageImpl(value);
     lo_address_free(addr);
 }
 
