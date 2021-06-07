@@ -11,16 +11,15 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Core Widgets REQUIRED)
 
 find_library(LO lo REQUIRED)
 
-add_executable(Muty
+qt_add_executable(Muty
     main.cpp
     mainwindow.cpp
     mainwindow.hpp
     mainwindow.ui
     )
 
-target_link_libraries(Muty PRIVATE Qt::Widgets lo)
+target_link_libraries(Muty PRIVATE Qt::Core Qt::Widgets lo)

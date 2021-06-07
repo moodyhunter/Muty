@@ -1,11 +1,6 @@
 #pragma once
 
-#include <QtCore/qglobal.h>
-#if QT_VERSION >= 0x050000
-    #include <QtWidgets/QMainWindow>
-#else
-    #include <QtGui/QMainWindow>
-#endif
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
